@@ -91,12 +91,25 @@ export function useEntities() {
     }
   }, []);
 
+  const generateSlug = (name: string) => {
+    return name
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // Remove accents
+      .replace(/[^a-z0-9]+/g, '-') // Replace non-alphanumeric with hyphens
+      .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
+      .substring(0, 50); // Limit length
+  };
+
   const createEntity = async (data: CreateEntityData) => {
     try {
+      const slug = generateSlug(data.name) + '-' + Date.now().toString(36);
+      
       const { data: newEntity, error } = await supabase
         .from('entities')
         .insert({
           name: data.name,
+          slug: slug,
           cnpj: data.cnpj || null,
           email: data.email || null,
           phone: data.phone || null,
