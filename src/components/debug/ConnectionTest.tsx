@@ -24,11 +24,13 @@ export function ConnectionTest() {
 
         if (error) {
           // Check if error is about missing table (means connection works but table doesn't exist)
-          if (error.message.includes('relation') && error.message.includes('does not exist')) {
+          if (error.message.includes('Could not find') || 
+              error.message.includes('relation') && error.message.includes('does not exist') ||
+              error.message.includes('schema cache')) {
             setStatus({
               connected: true,
-              message: 'Conectado ao Supabase!',
-              details: 'Mas as tabelas ainda não foram criadas. Execute o schema.sql.',
+              message: '✓ Conexão OK!',
+              details: 'O Supabase está acessível, mas as tabelas ainda não existem. Execute o schema.sql no SQL Editor do Supabase.',
             });
           } else if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
             setStatus({
