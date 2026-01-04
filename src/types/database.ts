@@ -7,6 +7,10 @@ export interface Entity {
   name: string;
   slug: string;
   logo_url: string | null;
+  cnpj: string | null;
+  email: string | null;
+  phone: string | null;
+  address: string | null;
   is_active: boolean;
   is_super_admin: boolean;
   settings: Record<string, unknown>;
