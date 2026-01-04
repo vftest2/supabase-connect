@@ -12,7 +12,9 @@ import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage";
 import EventsPage from "./pages/EventsPage";
 import EventDetailsPage from "./pages/EventDetailsPage";
-import SuperAdminPage from "./pages/SuperAdminPage";
+import SuperAdminDashboardPage from "./pages/super-admin/DashboardPage";
+import EntitiesPage from "./pages/super-admin/EntitiesPage";
+import UsersPage from "./pages/super-admin/UsersPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -53,19 +55,28 @@ const App = () => (
                 </ProtectedRoute>
               }
             />
+            {/* Super Admin Routes */}
             <Route
               path="/super-admin"
               element={
                 <SuperAdminRoute>
-                  <SuperAdminPage />
+                  <SuperAdminDashboardPage />
                 </SuperAdminRoute>
               }
             />
             <Route
-              path="/super-admin/*"
+              path="/super-admin/entities"
               element={
                 <SuperAdminRoute>
-                  <SuperAdminPage />
+                  <EntitiesPage />
+                </SuperAdminRoute>
+              }
+            />
+            <Route
+              path="/super-admin/users"
+              element={
+                <SuperAdminRoute>
+                  <UsersPage />
                 </SuperAdminRoute>
               }
             />
