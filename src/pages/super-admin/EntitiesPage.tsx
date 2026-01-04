@@ -1,21 +1,19 @@
 import { useState } from 'react';
-import { Plus, RefreshCw } from 'lucide-react';
+import { Plus, RefreshCw, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { SuperAdminLayout } from '@/components/super-admin/SuperAdminLayout';
-import { StatsCards } from '@/components/super-admin/StatsCards';
 import { EntitiesTable } from '@/components/super-admin/EntitiesTable';
 import { EntityDialog } from '@/components/super-admin/EntityDialog';
 import { useEntities } from '@/hooks/useEntities';
 import { Entity } from '@/types/database';
 import { Skeleton } from '@/components/ui/skeleton';
 
-export default function SuperAdminPage() {
+export default function EntitiesPage() {
   const {
     entities,
-    stats,
     isLoading,
     fetchEntities,
-    fetchStats,
     createEntity,
     updateEntity,
     toggleEntityStatus,
@@ -24,6 +22,14 @@ export default function SuperAdminPage() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingEntity, setEditingEntity] = useState<Entity | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const filteredEntities = entities.filter(
+    (entity) =>
+      entity.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      entity.cnpj?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      entity.email?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const handleOpenCreate = () => {
     setEditingEntity(null);
@@ -49,11 +55,6 @@ export default function SuperAdminPage() {
     }
   };
 
-  const handleRefresh = () => {
-    fetchEntities();
-    fetchStats();
-  };
-
   return (
     <SuperAdminLayout>
       <div className="space-y-6 animate-fade-in">
@@ -61,14 +62,14 @@ export default function SuperAdminPage() {
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <h1 className="text-3xl font-bold font-display tracking-tight">
-              Painel Super Admin
+              Entidades
             </h1>
             <p className="text-muted-foreground mt-1">
-              Gerencie todas as entidades do sistema
+              Gerencie as empresas cadastradas no sistema
             </p>
           </div>
           <div className="flex gap-2">
-            <Button variant="outline" size="icon" onClick={handleRefresh}>
+            <Button variant="outline" size="icon" onClick={fetchEntities}>
               <RefreshCw className="h-4 w-4" />
             </Button>
             <Button onClick={handleOpenCreate} className="bg-gradient-warm hover:opacity-90">
@@ -78,37 +79,34 @@ export default function SuperAdminPage() {
           </div>
         </div>
 
-        {/* Stats */}
-        {isLoading ? (
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-5">
-            {[...Array(5)].map((_, i) => (
-              <Skeleton key={i} className="h-24" />
-            ))}
-          </div>
-        ) : (
-          <StatsCards stats={stats} />
-        )}
+        {/* Search */}
+        <div className="relative max-w-md">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Buscar por nome, CNPJ ou email..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="pl-10"
+          />
+        </div>
 
-        {/* Entities Section */}
+        {/* Table */}
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold font-display">
-              Entidades Cadastradas
-            </h2>
             <p className="text-sm text-muted-foreground">
-              {entities.length} entidade(s)
+              {filteredEntities.length} de {entities.length} entidade(s)
             </p>
           </div>
 
           {isLoading ? (
             <div className="space-y-3">
-              {[...Array(3)].map((_, i) => (
+              {[...Array(5)].map((_, i) => (
                 <Skeleton key={i} className="h-16" />
               ))}
             </div>
           ) : (
             <EntitiesTable
-              entities={entities}
+              entities={filteredEntities}
               onEdit={handleOpenEdit}
               onToggleStatus={toggleEntityStatus}
             />
