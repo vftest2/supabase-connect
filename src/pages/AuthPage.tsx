@@ -8,6 +8,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { ConnectionTest } from '@/components/debug/ConnectionTest';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 
@@ -143,6 +144,9 @@ export default function AuthPage() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Connection Test */}
+        <ConnectionTest />
 
         <div className="mt-8 text-center">
           <Link
