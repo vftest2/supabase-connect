@@ -109,6 +109,79 @@ export type Database = {
           },
         ]
       }
+      contracts: {
+        Row: {
+          clicksign_document_key: string | null
+          clicksign_signer_key: string | null
+          client_id: string | null
+          created_at: string | null
+          document_name: string
+          document_url: string | null
+          entity_id: string
+          event_id: string
+          id: string
+          signed_at: string | null
+          status: string
+          updated_at: string | null
+          whatsapp_sent: boolean | null
+          whatsapp_sent_at: string | null
+        }
+        Insert: {
+          clicksign_document_key?: string | null
+          clicksign_signer_key?: string | null
+          client_id?: string | null
+          created_at?: string | null
+          document_name: string
+          document_url?: string | null
+          entity_id: string
+          event_id: string
+          id?: string
+          signed_at?: string | null
+          status?: string
+          updated_at?: string | null
+          whatsapp_sent?: boolean | null
+          whatsapp_sent_at?: string | null
+        }
+        Update: {
+          clicksign_document_key?: string | null
+          clicksign_signer_key?: string | null
+          client_id?: string | null
+          created_at?: string | null
+          document_name?: string
+          document_url?: string | null
+          entity_id?: string
+          event_id?: string
+          id?: string
+          signed_at?: string | null
+          status?: string
+          updated_at?: string | null
+          whatsapp_sent?: boolean | null
+          whatsapp_sent_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "contracts_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contracts_entity_id_fkey"
+            columns: ["entity_id"]
+            isOneToOne: false
+            referencedRelation: "entities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "contracts_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       decoration_items: {
         Row: {
           created_at: string | null
@@ -229,6 +302,93 @@ export type Database = {
         }
         Relationships: []
       }
+      event_assigned_users: {
+        Row: {
+          created_at: string | null
+          entity_id: string
+          event_id: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          entity_id: string
+          event_id: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          entity_id?: string
+          event_id?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_assigned_users_entity_id_fkey"
+            columns: ["entity_id"]
+            isOneToOne: false
+            referencedRelation: "entities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "event_assigned_users_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      event_items: {
+        Row: {
+          created_at: string | null
+          entity_id: string
+          event_id: string
+          id: string
+          inventory_item_id: string | null
+          name: string
+          quantity: number
+          unit_price: number
+        }
+        Insert: {
+          created_at?: string | null
+          entity_id: string
+          event_id: string
+          id?: string
+          inventory_item_id?: string | null
+          name: string
+          quantity?: number
+          unit_price?: number
+        }
+        Update: {
+          created_at?: string | null
+          entity_id?: string
+          event_id?: string
+          id?: string
+          inventory_item_id?: string | null
+          name?: string
+          quantity?: number
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_items_entity_id_fkey"
+            columns: ["entity_id"]
+            isOneToOne: false
+            referencedRelation: "entities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "event_items_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       event_updates: {
         Row: {
           action: string
@@ -291,14 +451,20 @@ export type Database = {
           created_at: string | null
           created_by: string | null
           description: string | null
+          end_date: string | null
           entity_id: string
           event_date: string
           event_time: string | null
+          event_type: string | null
           id: string
           location: string | null
           name: string
           notes: string | null
+          start_date: string | null
           status: Database["public"]["Enums"]["event_status"] | null
+          theme: string | null
+          title: string
+          total_value: number | null
           updated_at: string | null
         }
         Insert: {
@@ -311,14 +477,20 @@ export type Database = {
           created_at?: string | null
           created_by?: string | null
           description?: string | null
+          end_date?: string | null
           entity_id: string
           event_date: string
           event_time?: string | null
+          event_type?: string | null
           id?: string
           location?: string | null
           name: string
           notes?: string | null
+          start_date?: string | null
           status?: Database["public"]["Enums"]["event_status"] | null
+          theme?: string | null
+          title: string
+          total_value?: number | null
           updated_at?: string | null
         }
         Update: {
@@ -331,14 +503,20 @@ export type Database = {
           created_at?: string | null
           created_by?: string | null
           description?: string | null
+          end_date?: string | null
           entity_id?: string
           event_date?: string
           event_time?: string | null
+          event_type?: string | null
           id?: string
           location?: string | null
           name?: string
           notes?: string | null
+          start_date?: string | null
           status?: Database["public"]["Enums"]["event_status"] | null
+          theme?: string | null
+          title?: string
+          total_value?: number | null
           updated_at?: string | null
         }
         Relationships: [
@@ -354,6 +532,143 @@ export type Database = {
             columns: ["entity_id"]
             isOneToOne: false
             referencedRelation: "entities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      item_damages: {
+        Row: {
+          created_at: string | null
+          description: string
+          entity_id: string
+          id: string
+          inventory_item_id: string | null
+          notes: string | null
+          photos: string[] | null
+          quantity: number | null
+          registered_by: string | null
+          rental_id: string | null
+          rental_item_id: string | null
+          repair_cost: number | null
+          resolved_at: string | null
+          severity: string
+          status: string
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description: string
+          entity_id: string
+          id?: string
+          inventory_item_id?: string | null
+          notes?: string | null
+          photos?: string[] | null
+          quantity?: number | null
+          registered_by?: string | null
+          rental_id?: string | null
+          rental_item_id?: string | null
+          repair_cost?: number | null
+          resolved_at?: string | null
+          severity?: string
+          status?: string
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string
+          entity_id?: string
+          id?: string
+          inventory_item_id?: string | null
+          notes?: string | null
+          photos?: string[] | null
+          quantity?: number | null
+          registered_by?: string | null
+          rental_id?: string | null
+          rental_item_id?: string | null
+          repair_cost?: number | null
+          resolved_at?: string | null
+          severity?: string
+          status?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "item_damages_entity_id_fkey"
+            columns: ["entity_id"]
+            isOneToOne: false
+            referencedRelation: "entities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "item_damages_rental_id_fkey"
+            columns: ["rental_id"]
+            isOneToOne: false
+            referencedRelation: "rentals"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "item_damages_rental_item_id_fkey"
+            columns: ["rental_item_id"]
+            isOneToOne: false
+            referencedRelation: "rental_items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      item_history: {
+        Row: {
+          action_type: string
+          created_at: string | null
+          entity_id: string
+          event_id: string | null
+          id: string
+          inventory_item_id: string | null
+          notes: string | null
+          quantity: number | null
+          rental_id: string | null
+        }
+        Insert: {
+          action_type: string
+          created_at?: string | null
+          entity_id: string
+          event_id?: string | null
+          id?: string
+          inventory_item_id?: string | null
+          notes?: string | null
+          quantity?: number | null
+          rental_id?: string | null
+        }
+        Update: {
+          action_type?: string
+          created_at?: string | null
+          entity_id?: string
+          event_id?: string | null
+          id?: string
+          inventory_item_id?: string | null
+          notes?: string | null
+          quantity?: number | null
+          rental_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "item_history_entity_id_fkey"
+            columns: ["entity_id"]
+            isOneToOne: false
+            referencedRelation: "entities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "item_history_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "item_history_rental_id_fkey"
+            columns: ["rental_id"]
+            isOneToOne: false
+            referencedRelation: "rentals"
             referencedColumns: ["id"]
           },
         ]
@@ -398,6 +713,148 @@ export type Database = {
             columns: ["entity_id"]
             isOneToOne: false
             referencedRelation: "entities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rental_items: {
+        Row: {
+          checked_in: boolean | null
+          checked_out: boolean | null
+          created_at: string | null
+          damaged_quantity: number | null
+          entity_id: string
+          id: string
+          inventory_item_id: string | null
+          lost_quantity: number | null
+          name: string
+          notes: string | null
+          quantity: number
+          rental_id: string
+          returned_quantity: number | null
+          unit_price: number
+        }
+        Insert: {
+          checked_in?: boolean | null
+          checked_out?: boolean | null
+          created_at?: string | null
+          damaged_quantity?: number | null
+          entity_id: string
+          id?: string
+          inventory_item_id?: string | null
+          lost_quantity?: number | null
+          name: string
+          notes?: string | null
+          quantity?: number
+          rental_id: string
+          returned_quantity?: number | null
+          unit_price?: number
+        }
+        Update: {
+          checked_in?: boolean | null
+          checked_out?: boolean | null
+          created_at?: string | null
+          damaged_quantity?: number | null
+          entity_id?: string
+          id?: string
+          inventory_item_id?: string | null
+          lost_quantity?: number | null
+          name?: string
+          notes?: string | null
+          quantity?: number
+          rental_id?: string
+          returned_quantity?: number | null
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rental_items_entity_id_fkey"
+            columns: ["entity_id"]
+            isOneToOne: false
+            referencedRelation: "entities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "rental_items_rental_id_fkey"
+            columns: ["rental_id"]
+            isOneToOne: false
+            referencedRelation: "rentals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      rentals: {
+        Row: {
+          actual_departure_date: string | null
+          actual_return_date: string | null
+          client_id: string | null
+          created_at: string | null
+          departure_date: string | null
+          description: string | null
+          entity_id: string
+          event_id: string | null
+          id: string
+          notes: string | null
+          return_date: string | null
+          status: string
+          title: string
+          total_value: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          actual_departure_date?: string | null
+          actual_return_date?: string | null
+          client_id?: string | null
+          created_at?: string | null
+          departure_date?: string | null
+          description?: string | null
+          entity_id: string
+          event_id?: string | null
+          id?: string
+          notes?: string | null
+          return_date?: string | null
+          status?: string
+          title: string
+          total_value?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          actual_departure_date?: string | null
+          actual_return_date?: string | null
+          client_id?: string | null
+          created_at?: string | null
+          departure_date?: string | null
+          description?: string | null
+          entity_id?: string
+          event_id?: string | null
+          id?: string
+          notes?: string | null
+          return_date?: string | null
+          status?: string
+          title?: string
+          total_value?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rentals_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "rentals_entity_id_fkey"
+            columns: ["entity_id"]
+            isOneToOne: false
+            referencedRelation: "entities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "rentals_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
             referencedColumns: ["id"]
           },
         ]
@@ -476,6 +933,11 @@ export type Database = {
         | "assembly"
         | "completed"
         | "cancelled"
+        | "budget"
+        | "confirmed"
+        | "in_assembly"
+        | "in_transit"
+        | "finished"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -626,6 +1088,11 @@ export const Constants = {
         "assembly",
         "completed",
         "cancelled",
+        "budget",
+        "confirmed",
+        "in_assembly",
+        "in_transit",
+        "finished",
       ],
     },
   },
