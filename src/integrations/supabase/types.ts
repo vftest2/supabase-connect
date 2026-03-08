@@ -14,6 +14,53 @@ export type Database = {
   }
   public: {
     Tables: {
+      clients: {
+        Row: {
+          address: string | null
+          client_type: Database["public"]["Enums"]["client_type"]
+          created_at: string | null
+          email: string | null
+          entity_id: string
+          id: string
+          name: string
+          notes: string | null
+          phone: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          address?: string | null
+          client_type?: Database["public"]["Enums"]["client_type"]
+          created_at?: string | null
+          email?: string | null
+          entity_id: string
+          id?: string
+          name: string
+          notes?: string | null
+          phone?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          address?: string | null
+          client_type?: Database["public"]["Enums"]["client_type"]
+          created_at?: string | null
+          email?: string | null
+          entity_id?: string
+          id?: string
+          name?: string
+          notes?: string | null
+          phone?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "clients_entity_id_fkey"
+            columns: ["entity_id"]
+            isOneToOne: false
+            referencedRelation: "entities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       comments: {
         Row: {
           content: string
@@ -238,6 +285,7 @@ export type Database = {
           address: string | null
           budget: number | null
           client_email: string | null
+          client_id: string | null
           client_name: string | null
           client_phone: string | null
           created_at: string | null
@@ -257,6 +305,7 @@ export type Database = {
           address?: string | null
           budget?: number | null
           client_email?: string | null
+          client_id?: string | null
           client_name?: string | null
           client_phone?: string | null
           created_at?: string | null
@@ -276,6 +325,7 @@ export type Database = {
           address?: string | null
           budget?: number | null
           client_email?: string | null
+          client_id?: string | null
           client_name?: string | null
           client_phone?: string | null
           created_at?: string | null
@@ -292,6 +342,13 @@ export type Database = {
           updated_at?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "events_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "events_entity_id_fkey"
             columns: ["entity_id"]
@@ -406,6 +463,7 @@ export type Database = {
         | "decorator"
         | "employee"
         | "driver"
+      client_type: "standard" | "vip" | "premium"
       decoration_status:
         | "pending"
         | "in_transit"
@@ -554,6 +612,7 @@ export const Constants = {
         "employee",
         "driver",
       ],
+      client_type: ["standard", "vip", "premium"],
       decoration_status: [
         "pending",
         "in_transit",
