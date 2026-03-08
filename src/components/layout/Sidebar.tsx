@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, 
   Calendar, 
+  CalendarRange,
   Package, 
   Users, 
   UserCircle,
@@ -25,6 +26,7 @@ import {
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+  { name: 'Agenda', href: '/agenda', icon: CalendarRange },
   { name: 'Clientes', href: '/clients', icon: UserCircle },
   { name: 'Eventos', href: '/events', icon: Calendar },
   { name: 'Decorações', href: '/decorations', icon: Package },
