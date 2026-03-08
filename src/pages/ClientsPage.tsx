@@ -34,6 +34,7 @@ export default function ClientsPage() {
   const [search, setSearch] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [editingClient, setEditingClient] = useState<Client | null>(null);
   const [stats, setStats] = useState({ total: 0, totalEvents: 0, totalRevenue: 0 });
 
