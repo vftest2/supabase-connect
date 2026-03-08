@@ -170,50 +170,28 @@ export default function AdminEntityUsersPage() {
     if (!entityId) return;
     setIsSubmitting(true);
     try {
-      const { data: authData, error: authError } = await supabase.auth.signUp({
-        email: data.email,
-        password: data.password,
-        options: {
-          data: {
-            full_name: data.full_name,
-            entity_id: entityId,
-            phone: data.phone,
-            position: data.position,
-          },
+      // Use edge function to create user (avoids logging out current admin)
+      const { data: responseData, error } = await supabase.functions.invoke('create-user', {
+        body: {
+          email: data.email,
+          password: data.password,
+          full_name: data.full_name,
+          entity_id: entityId,
+          role: data.role,
+          phone: data.phone || null,
+          position: data.position || null,
         },
       });
 
-      if (authError) throw authError;
-      if (!authData.user) throw new Error('Erro ao criar usuário');
-
-      // The trigger creates profile + default 'user' role.
-      // We need to update the role to the selected one.
-      // Delete the default role and insert the correct one
-      await supabase
-        .from('user_roles')
-        .delete()
-        .eq('user_id', authData.user.id)
-        .eq('entity_id', entityId);
-
-      const { error: roleError } = await supabase
-        .from('user_roles')
-        .insert({
-          user_id: authData.user.id,
-          entity_id: entityId,
-          role: data.role,
-        });
-
-      if (roleError) console.error('Role error:', roleError);
+      if (error) throw error;
+      if (responseData?.error) throw new Error(responseData.error);
 
       toast({ title: 'Sucesso', description: 'Usuário criado com sucesso!' });
       setDialogOpen(false);
       form.reset();
       await fetchUsers();
     } catch (error: any) {
-      let message = 'Não foi possível criar o usuário.';
-      if (error.message?.includes('already registered')) {
-        message = 'Este email já está cadastrado.';
-      }
+      let message = error.message || 'Não foi possível criar o usuário.';
       toast({ title: 'Erro', description: message, variant: 'destructive' });
     } finally {
       setIsSubmitting(false);
@@ -512,7 +490,7 @@ export default function AdminEntityUsersPage() {
                     <FormItem>
                       <FormLabel>Cargo</FormLabel>
                       <FormControl>
-                        <Input placeholder="Ex: Decorador" {...field} />
+                        <Input placeholder="Ex: Gerente" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -520,13 +498,27 @@ export default function AdminEntityUsersPage() {
                 />
               </div>
 
-              <div className="flex justify-end gap-3 pt-4">
-                <Button type="button" variant="outline" onClick={() => setDialogOpen(false)} disabled={isSubmitting}>
+              <div className="flex justify-end gap-3 pt-2">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setDialogOpen(false)}
+                >
                   Cancelar
                 </Button>
-                <Button type="submit" disabled={isSubmitting}>
-                  {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                  Criar Usuário
+                <Button
+                  type="submit"
+                  className="bg-gradient-warm hover:opacity-90"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Criando...
+                    </>
+                  ) : (
+                    'Criar Usuário'
+                  )}
                 </Button>
               </div>
             </form>
