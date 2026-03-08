@@ -202,12 +202,20 @@ export default function ClientsPage() {
           onDelete={handleDelete}
         />
 
-        {/* Dialog */}
+        {/* Edit Dialog */}
         <ClientDialog
           open={dialogOpen}
           onOpenChange={handleDialogClose}
           client={editingClient}
           onSuccess={fetchClients}
+        />
+
+        {/* Create Dialog with Event */}
+        <CreateClientWithEventDialog
+          open={createDialogOpen}
+          onOpenChange={setCreateDialogOpen}
+          onClientCreated={fetchClients}
+          onEventCreated={() => {}}
         />
       </div>
     </DashboardLayout>
