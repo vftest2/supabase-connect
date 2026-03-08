@@ -41,12 +41,17 @@ import { EventDialog } from '@/components/events/EventDialog';
 import { DecorationDialog } from '@/components/decorations/DecorationDialog';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 
-const statusColors: Record<EventStatus, string> = {
-  planning: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
-  in_progress: 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400',
-  assembly: 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400',
-  completed: 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
-  cancelled: 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
+const statusColors: Record<string, string> = {
+  budget: 'bg-muted text-muted-foreground',
+  confirmed: 'bg-success/15 text-success',
+  in_assembly: 'bg-warning/15 text-warning',
+  in_transit: 'bg-primary/15 text-primary',
+  finished: 'bg-muted text-muted-foreground',
+  planning: 'bg-primary/15 text-primary',
+  in_progress: 'bg-warning/15 text-warning',
+  assembly: 'bg-accent/15 text-accent',
+  completed: 'bg-success/15 text-success',
+  cancelled: 'bg-destructive/15 text-destructive',
 };
 
 export default function EventDetailsPage() {
