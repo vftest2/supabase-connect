@@ -32,8 +32,9 @@ const navigation = [
   { name: 'Clientes', href: '/clients', icon: UserCircle },
   { name: 'Eventos', href: '/events', icon: Calendar },
   { name: 'Locações', href: '/rentals', icon: Truck },
+  { name: 'Logística', href: '/logistics', icon: Package },
   { name: 'Contratos', href: '/contracts', icon: FileText },
-  { name: 'Decorações', href: '/decorations', icon: Package },
+  { name: 'Avarias', href: '/damages', icon: AlertTriangle },
   { name: 'Equipe', href: '/team', icon: Users, requireAdmin: true },
   { name: 'Configurações', href: '/settings', icon: Settings },
 ];
