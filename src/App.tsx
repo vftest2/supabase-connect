@@ -12,9 +12,9 @@ import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage";
 import EventsPage from "./pages/EventsPage";
 import EventDetailsPage from "./pages/EventDetailsPage";
-import SuperAdminDashboardPage from "./pages/super-admin/DashboardPage";
-import EntitiesPage from "./pages/super-admin/EntitiesPage";
-import UsersPage from "./pages/super-admin/UsersPage";
+import AdminDashboardPage from "./pages/admin/DashboardPage";
+import AdminEntitiesPage from "./pages/admin/EntitiesPage";
+import AdminEntityUsersPage from "./pages/admin/EntityUsersPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -29,7 +29,9 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Navigate to="/auth" replace />} />
             <Route path="/auth" element={<AuthPage />} />
-            <Route path="/admin-login" element={<AdminLoginPage />} />
+            <Route path="/admin" element={<AdminLoginPage />} />
+            {/* Legacy route redirect */}
+            <Route path="/admin-login" element={<Navigate to="/admin" replace />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route
               path="/dashboard"
@@ -55,31 +57,34 @@ const App = () => (
                 </ProtectedRoute>
               }
             />
-            {/* Super Admin Routes */}
+            {/* Admin Routes */}
             <Route
-              path="/super-admin"
+              path="/admin/dashboard"
               element={
                 <SuperAdminRoute>
-                  <SuperAdminDashboardPage />
+                  <AdminDashboardPage />
                 </SuperAdminRoute>
               }
             />
             <Route
-              path="/super-admin/entities"
+              path="/admin/entities"
               element={
                 <SuperAdminRoute>
-                  <EntitiesPage />
+                  <AdminEntitiesPage />
                 </SuperAdminRoute>
               }
             />
             <Route
-              path="/super-admin/users"
+              path="/admin/entities/:entityId/users"
               element={
                 <SuperAdminRoute>
-                  <UsersPage />
+                  <AdminEntityUsersPage />
                 </SuperAdminRoute>
               }
             />
+            {/* Legacy route redirects */}
+            <Route path="/super-admin" element={<Navigate to="/admin/dashboard" replace />} />
+            <Route path="/super-admin/*" element={<Navigate to="/admin/dashboard" replace />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </AuthProvider>

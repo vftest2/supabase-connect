@@ -22,7 +22,7 @@ export function SuperAdminRoute({ children }: SuperAdminRouteProps) {
   }
 
   if (!user) {
-    return <Navigate to="/admin-login" replace />;
+    return <Navigate to="/admin" replace />;
   }
 
   if (!isSuperAdmin) {
