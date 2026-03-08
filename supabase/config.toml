@@ -1,1 +1,10 @@
 project_id = "blgocjhftikjxqndnnzy"
+
+[functions.create-user]
+verify_jwt = false
+
+[functions.clicksign]
+verify_jwt = false
+
+[functions.clicksign-webhook]
+verify_jwt = false

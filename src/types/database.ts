@@ -1,6 +1,10 @@
 export type AppRole = 'super_admin' | 'entity_admin' | 'manager' | 'user' | 'decorator' | 'employee' | 'driver';
-export type EventStatus = 'planning' | 'in_progress' | 'assembly' | 'completed' | 'cancelled';
+export type EventStatus = 'budget' | 'confirmed' | 'in_assembly' | 'in_transit' | 'finished' | 'planning' | 'in_progress' | 'assembly' | 'completed' | 'cancelled';
 export type DecorationStatus = 'pending' | 'in_transit' | 'delivered' | 'installed' | 'returned';
+export type RentalStatus = 'draft' | 'pending' | 'in_progress' | 'completed' | 'cancelled';
+export type ContractStatus = 'pending' | 'sent' | 'signed' | 'cancelled';
+export type DamageSeverity = 'minor' | 'moderate' | 'severe';
+export type DamageStatus = 'pending' | 'repairing' | 'resolved' | 'written_off';
 
 export interface Entity {
   id: string;
@@ -46,21 +50,47 @@ export interface UserRole {
 export interface Event {
   id: string;
   entity_id: string;
+  client_id: string | null;
   name: string;
+  title: string;
   description: string | null;
+  event_type: string | null;
   client_name: string | null;
   client_phone: string | null;
   client_email: string | null;
   event_date: string;
   event_time: string | null;
+  start_date: string | null;
+  end_date: string | null;
   location: string | null;
   address: string | null;
+  theme: string | null;
   status: EventStatus;
   budget: number | null;
+  total_value: number | null;
   notes: string | null;
   created_by: string | null;
   created_at: string;
   updated_at: string;
+}
+
+export interface EventItem {
+  id: string;
+  event_id: string;
+  entity_id: string;
+  inventory_item_id: string | null;
+  name: string;
+  quantity: number;
+  unit_price: number;
+  created_at: string;
+}
+
+export interface EventAssignedUser {
+  id: string;
+  event_id: string;
+  entity_id: string;
+  user_id: string;
+  created_at: string;
 }
 
 export interface DecorationItem {
@@ -73,6 +103,89 @@ export interface DecorationItem {
   unit_price: number | null;
   status: DecorationStatus;
   notes: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Rental {
+  id: string;
+  entity_id: string;
+  event_id: string | null;
+  client_id: string | null;
+  title: string;
+  description: string | null;
+  departure_date: string | null;
+  return_date: string | null;
+  actual_departure_date: string | null;
+  actual_return_date: string | null;
+  total_value: number;
+  status: RentalStatus;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface RentalItem {
+  id: string;
+  rental_id: string;
+  entity_id: string;
+  inventory_item_id: string | null;
+  name: string;
+  quantity: number;
+  unit_price: number;
+  checked_out: boolean;
+  checked_in: boolean;
+  returned_quantity: number;
+  damaged_quantity: number;
+  lost_quantity: number;
+  notes: string | null;
+  created_at: string;
+}
+
+export interface ItemDamage {
+  id: string;
+  entity_id: string;
+  inventory_item_id: string | null;
+  rental_id: string | null;
+  rental_item_id: string | null;
+  description: string;
+  severity: DamageSeverity;
+  quantity: number;
+  photos: string[] | null;
+  repair_cost: number | null;
+  status: DamageStatus;
+  notes: string | null;
+  registered_by: string | null;
+  resolved_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ItemHistory {
+  id: string;
+  entity_id: string;
+  inventory_item_id: string | null;
+  rental_id: string | null;
+  event_id: string | null;
+  action_type: string;
+  quantity: number | null;
+  notes: string | null;
+  created_at: string;
+}
+
+export interface Contract {
+  id: string;
+  entity_id: string;
+  event_id: string;
+  client_id: string | null;
+  document_name: string;
+  document_url: string | null;
+  status: ContractStatus;
+  clicksign_document_key: string | null;
+  clicksign_signer_key: string | null;
+  whatsapp_sent: boolean;
+  whatsapp_sent_at: string | null;
+  signed_at: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -108,7 +221,13 @@ export interface AuthUser {
   entity: Entity | null;
 }
 
-export const EVENT_STATUS_LABELS: Record<EventStatus, string> = {
+export const EVENT_STATUS_LABELS: Record<string, string> = {
+  budget: 'Orçamento',
+  confirmed: 'Confirmado',
+  in_assembly: 'Em Montagem',
+  in_transit: 'Em Trânsito',
+  finished: 'Finalizado',
+  // Legacy
   planning: 'Planejamento',
   in_progress: 'Em Andamento',
   assembly: 'Montagem',
@@ -124,6 +243,21 @@ export const DECORATION_STATUS_LABELS: Record<DecorationStatus, string> = {
   returned: 'Devolvido',
 };
 
+export const RENTAL_STATUS_LABELS: Record<RentalStatus, string> = {
+  draft: 'Rascunho',
+  pending: 'Pendente',
+  in_progress: 'Em Andamento',
+  completed: 'Concluída',
+  cancelled: 'Cancelada',
+};
+
+export const CONTRACT_STATUS_LABELS: Record<ContractStatus, string> = {
+  pending: 'Pendente',
+  sent: 'Enviado',
+  signed: 'Assinado',
+  cancelled: 'Cancelado',
+};
+
 export const ROLE_LABELS: Record<AppRole, string> = {
   super_admin: 'Super Admin',
   entity_admin: 'Administrador',
@@ -133,3 +267,15 @@ export const ROLE_LABELS: Record<AppRole, string> = {
   employee: 'Funcionário',
   driver: 'Motorista',
 };
+
+export const EVENT_TYPES = [
+  'Casamento',
+  'Aniversário Infantil',
+  'Aniversário Adulto',
+  'Festa de 15 Anos',
+  'Formatura',
+  'Evento Corporativo',
+  'Chá de Bebê',
+  'Batizado',
+  'Outro',
+];
