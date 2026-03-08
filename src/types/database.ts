@@ -1,4 +1,4 @@
-export type AppRole = 'super_admin' | 'entity_admin' | 'manager' | 'user';
+export type AppRole = 'super_admin' | 'entity_admin' | 'manager' | 'user' | 'decorator' | 'employee' | 'driver';
 export type EventStatus = 'planning' | 'in_progress' | 'assembly' | 'completed' | 'cancelled';
 export type DecorationStatus = 'pending' | 'in_transit' | 'delivered' | 'installed' | 'returned';
 
@@ -14,6 +14,11 @@ export interface Entity {
   is_active: boolean;
   is_super_admin: boolean;
   settings: Record<string, unknown>;
+  primary_color: string | null;
+  secondary_color: string | null;
+  accent_color: string | null;
+  sidebar_color: string | null;
+  theme: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -124,4 +129,7 @@ export const ROLE_LABELS: Record<AppRole, string> = {
   entity_admin: 'Administrador',
   manager: 'Gerente',
   user: 'Usuário',
+  decorator: 'Decorador',
+  employee: 'Funcionário',
+  driver: 'Motorista',
 };

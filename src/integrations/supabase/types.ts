@@ -121,6 +121,7 @@ export type Database = {
       }
       entities: {
         Row: {
+          accent_color: string | null
           address: string | null
           cnpj: string | null
           created_at: string | null
@@ -131,11 +132,16 @@ export type Database = {
           logo_url: string | null
           name: string
           phone: string | null
+          primary_color: string | null
+          secondary_color: string | null
           settings: Json | null
+          sidebar_color: string | null
           slug: string
+          theme: string | null
           updated_at: string | null
         }
         Insert: {
+          accent_color?: string | null
           address?: string | null
           cnpj?: string | null
           created_at?: string | null
@@ -146,11 +152,16 @@ export type Database = {
           logo_url?: string | null
           name: string
           phone?: string | null
+          primary_color?: string | null
+          secondary_color?: string | null
           settings?: Json | null
+          sidebar_color?: string | null
           slug: string
+          theme?: string | null
           updated_at?: string | null
         }
         Update: {
+          accent_color?: string | null
           address?: string | null
           cnpj?: string | null
           created_at?: string | null
@@ -161,8 +172,12 @@ export type Database = {
           logo_url?: string | null
           name?: string
           phone?: string | null
+          primary_color?: string | null
+          secondary_color?: string | null
           settings?: Json | null
+          sidebar_color?: string | null
           slug?: string
+          theme?: string | null
           updated_at?: string | null
         }
         Relationships: []
@@ -383,7 +398,14 @@ export type Database = {
       is_super_admin: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      app_role: "super_admin" | "entity_admin" | "manager" | "user"
+      app_role:
+        | "super_admin"
+        | "entity_admin"
+        | "manager"
+        | "user"
+        | "decorator"
+        | "employee"
+        | "driver"
       decoration_status:
         | "pending"
         | "in_transit"
@@ -523,7 +545,15 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["super_admin", "entity_admin", "manager", "user"],
+      app_role: [
+        "super_admin",
+        "entity_admin",
+        "manager",
+        "user",
+        "decorator",
+        "employee",
+        "driver",
+      ],
       decoration_status: [
         "pending",
         "in_transit",

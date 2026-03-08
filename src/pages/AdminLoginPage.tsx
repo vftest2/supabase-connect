@@ -35,7 +35,7 @@ export default function AdminLoginPage() {
 
   useEffect(() => {
     if (user && isSuperAdmin) {
-      navigate('/super-admin');
+      navigate('/admin/dashboard');
     }
   }, [user, isSuperAdmin, navigate]);
 
@@ -59,7 +59,6 @@ export default function AdminLoginPage() {
         return;
       }
 
-      // The redirect will happen via the useEffect when isSuperAdmin updates
       toast({
         title: 'Verificando permissões...',
         description: 'Aguarde enquanto validamos seu acesso',
