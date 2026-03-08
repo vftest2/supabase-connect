@@ -9,6 +9,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { ClientsTable } from '@/components/clients/ClientsTable';
 import { ClientDialog } from '@/components/clients/ClientDialog';
+import { CreateClientWithEventDialog } from '@/components/clients/CreateClientWithEventDialog';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export interface Client {
@@ -33,6 +34,7 @@ export default function ClientsPage() {
   const [search, setSearch] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [editingClient, setEditingClient] = useState<Client | null>(null);
   const [stats, setStats] = useState({ total: 0, totalEvents: 0, totalRevenue: 0 });
 
@@ -139,7 +141,7 @@ export default function ClientsPage() {
             <h1 className="text-3xl font-display font-bold text-foreground">Clientes</h1>
             <p className="text-muted-foreground mt-1">Gerencie os clientes da sua empresa</p>
           </div>
-          <Button onClick={() => setDialogOpen(true)} className="gap-2">
+          <Button onClick={() => setCreateDialogOpen(true)} className="gap-2">
             <Plus className="w-4 h-4" />
             Novo Cliente
           </Button>
@@ -200,12 +202,20 @@ export default function ClientsPage() {
           onDelete={handleDelete}
         />
 
-        {/* Dialog */}
+        {/* Edit Dialog */}
         <ClientDialog
           open={dialogOpen}
           onOpenChange={handleDialogClose}
           client={editingClient}
           onSuccess={fetchClients}
+        />
+
+        {/* Create Dialog with Event */}
+        <CreateClientWithEventDialog
+          open={createDialogOpen}
+          onOpenChange={setCreateDialogOpen}
+          onClientCreated={fetchClients}
+          onEventCreated={() => {}}
         />
       </div>
     </DashboardLayout>
