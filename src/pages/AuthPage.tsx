@@ -150,7 +150,7 @@ export default function AuthPage() {
 
         <div className="mt-8 text-center">
           <Link
-            to="/admin-login"
+            to="/admin"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
             <Lock className="w-3 h-3" />
