@@ -190,21 +190,20 @@ export default function AdminEntityUsersPage() {
       // We need to update the role to the selected one.
       // Delete the default role and insert the correct one
       await supabase
-          .from('user_roles')
-          .delete()
-          .eq('user_id', authData.user.id)
-          .eq('entity_id', entityId);
+        .from('user_roles')
+        .delete()
+        .eq('user_id', authData.user.id)
+        .eq('entity_id', entityId);
 
-        const { error: roleError } = await supabase
-          .from('user_roles')
-          .insert({
-            user_id: authData.user.id,
-            entity_id: entityId,
-            role: data.role,
-          });
+      const { error: roleError } = await supabase
+        .from('user_roles')
+        .insert({
+          user_id: authData.user.id,
+          entity_id: entityId,
+          role: data.role,
+        });
 
-        if (roleError) console.error('Role error:', roleError);
-      }
+      if (roleError) console.error('Role error:', roleError);
 
       toast({ title: 'Sucesso', description: 'Usuário criado com sucesso!' });
       setDialogOpen(false);
