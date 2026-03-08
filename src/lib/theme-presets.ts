@@ -18,11 +18,11 @@ export interface ThemePreset {
 
 export const themePresets: ThemePreset[] = [
   {
-    id: 'coral-warmth',
-    name: 'Coral Quente',
-    description: 'Tons quentes e acolhedores com coral vibrante',
-    preview: { primary: '#E85A4F', secondary: '#F5F0EB', accent: '#E8A83C', sidebar: '#1a1a2e' },
-    colors: { primary_color: '#E85A4F', secondary_color: '#F5F0EB', accent_color: '#E8A83C', sidebar_color: '#1a1a2e' },
+    id: 'blue-modern',
+    name: 'Azul Moderno',
+    description: 'Clean e profissional com azul vibrante',
+    preview: { primary: '#3B82F6', secondary: '#F0F4FF', accent: '#7C3AED', sidebar: '#0F172A' },
+    colors: { primary_color: '#3B82F6', secondary_color: '#F0F4FF', accent_color: '#7C3AED', sidebar_color: '#0F172A' },
   },
   {
     id: 'midnight-blue',
