@@ -65,8 +65,8 @@ export function useDashboardData(): DashboardData {
 
       // Metrics
       const totalEvents = allEvents.length;
-      const confirmedEvents = allEvents.filter(e => e.status === 'in_progress' || e.status === 'assembly').length;
-      const pendingBudgets = allEvents.filter(e => e.status === 'planning').length;
+      const confirmedEvents = allEvents.filter(e => e.status === 'confirmed' || e.status === 'in_assembly' || e.status === 'in_transit' || e.status === 'in_progress' || e.status === 'assembly').length;
+      const pendingBudgets = allEvents.filter(e => e.status === 'budget' || e.status === 'planning').length;
 
       // Monthly revenue (budget sum for current month events)
       const monthlyRevenue = allEvents
