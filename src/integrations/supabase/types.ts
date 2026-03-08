@@ -14,16 +14,387 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      comments: {
+        Row: {
+          content: string
+          created_at: string | null
+          entity_id: string
+          event_id: string
+          id: string
+          is_internal: boolean | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          content: string
+          created_at?: string | null
+          entity_id: string
+          event_id: string
+          id?: string
+          is_internal?: boolean | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          content?: string
+          created_at?: string | null
+          entity_id?: string
+          event_id?: string
+          id?: string
+          is_internal?: boolean | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comments_entity_id_fkey"
+            columns: ["entity_id"]
+            isOneToOne: false
+            referencedRelation: "entities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      decoration_items: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          entity_id: string
+          event_id: string
+          id: string
+          name: string
+          notes: string | null
+          quantity: number | null
+          status: Database["public"]["Enums"]["decoration_status"] | null
+          unit_price: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          entity_id: string
+          event_id: string
+          id?: string
+          name: string
+          notes?: string | null
+          quantity?: number | null
+          status?: Database["public"]["Enums"]["decoration_status"] | null
+          unit_price?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          entity_id?: string
+          event_id?: string
+          id?: string
+          name?: string
+          notes?: string | null
+          quantity?: number | null
+          status?: Database["public"]["Enums"]["decoration_status"] | null
+          unit_price?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "decoration_items_entity_id_fkey"
+            columns: ["entity_id"]
+            isOneToOne: false
+            referencedRelation: "entities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "decoration_items_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      entities: {
+        Row: {
+          address: string | null
+          cnpj: string | null
+          created_at: string | null
+          email: string | null
+          id: string
+          is_active: boolean | null
+          is_super_admin: boolean | null
+          logo_url: string | null
+          name: string
+          phone: string | null
+          settings: Json | null
+          slug: string
+          updated_at: string | null
+        }
+        Insert: {
+          address?: string | null
+          cnpj?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          is_active?: boolean | null
+          is_super_admin?: boolean | null
+          logo_url?: string | null
+          name: string
+          phone?: string | null
+          settings?: Json | null
+          slug: string
+          updated_at?: string | null
+        }
+        Update: {
+          address?: string | null
+          cnpj?: string | null
+          created_at?: string | null
+          email?: string | null
+          id?: string
+          is_active?: boolean | null
+          is_super_admin?: boolean | null
+          logo_url?: string | null
+          name?: string
+          phone?: string | null
+          settings?: Json | null
+          slug?: string
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      event_updates: {
+        Row: {
+          action: string
+          created_at: string | null
+          description: string | null
+          entity_id: string
+          event_id: string
+          id: string
+          new_value: Json | null
+          old_value: Json | null
+          user_id: string | null
+        }
+        Insert: {
+          action: string
+          created_at?: string | null
+          description?: string | null
+          entity_id: string
+          event_id: string
+          id?: string
+          new_value?: Json | null
+          old_value?: Json | null
+          user_id?: string | null
+        }
+        Update: {
+          action?: string
+          created_at?: string | null
+          description?: string | null
+          entity_id?: string
+          event_id?: string
+          id?: string
+          new_value?: Json | null
+          old_value?: Json | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "event_updates_entity_id_fkey"
+            columns: ["entity_id"]
+            isOneToOne: false
+            referencedRelation: "entities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "event_updates_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      events: {
+        Row: {
+          address: string | null
+          budget: number | null
+          client_email: string | null
+          client_name: string | null
+          client_phone: string | null
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          entity_id: string
+          event_date: string
+          event_time: string | null
+          id: string
+          location: string | null
+          name: string
+          notes: string | null
+          status: Database["public"]["Enums"]["event_status"] | null
+          updated_at: string | null
+        }
+        Insert: {
+          address?: string | null
+          budget?: number | null
+          client_email?: string | null
+          client_name?: string | null
+          client_phone?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          entity_id: string
+          event_date: string
+          event_time?: string | null
+          id?: string
+          location?: string | null
+          name: string
+          notes?: string | null
+          status?: Database["public"]["Enums"]["event_status"] | null
+          updated_at?: string | null
+        }
+        Update: {
+          address?: string | null
+          budget?: number | null
+          client_email?: string | null
+          client_name?: string | null
+          client_phone?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          entity_id?: string
+          event_date?: string
+          event_time?: string | null
+          id?: string
+          location?: string | null
+          name?: string
+          notes?: string | null
+          status?: Database["public"]["Enums"]["event_status"] | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "events_entity_id_fkey"
+            columns: ["entity_id"]
+            isOneToOne: false
+            referencedRelation: "entities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string | null
+          entity_id: string
+          full_name: string
+          id: string
+          is_active: boolean | null
+          phone: string | null
+          position: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string | null
+          entity_id: string
+          full_name: string
+          id: string
+          is_active?: boolean | null
+          phone?: string | null
+          position?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string | null
+          entity_id?: string
+          full_name?: string
+          id?: string
+          is_active?: boolean | null
+          phone?: string | null
+          position?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_entity_id_fkey"
+            columns: ["entity_id"]
+            isOneToOne: false
+            referencedRelation: "entities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string | null
+          entity_id: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          entity_id: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          entity_id?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_roles_entity_id_fkey"
+            columns: ["entity_id"]
+            isOneToOne: false
+            referencedRelation: "entities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      belongs_to_entity: {
+        Args: { _entity_id: string; _user_id: string }
+        Returns: boolean
+      }
+      get_user_entity_id: { Args: never; Returns: string }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_super_admin: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "super_admin" | "entity_admin" | "manager" | "user"
+      decoration_status:
+        | "pending"
+        | "in_transit"
+        | "delivered"
+        | "installed"
+        | "returned"
+      event_status:
+        | "planning"
+        | "in_progress"
+        | "assembly"
+        | "completed"
+        | "cancelled"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +521,22 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["super_admin", "entity_admin", "manager", "user"],
+      decoration_status: [
+        "pending",
+        "in_transit",
+        "delivered",
+        "installed",
+        "returned",
+      ],
+      event_status: [
+        "planning",
+        "in_progress",
+        "assembly",
+        "completed",
+        "cancelled",
+      ],
+    },
   },
 } as const
