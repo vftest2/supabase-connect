@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { BrandingProvider } from "@/components/branding/BrandingProvider";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import { SuperAdminRoute } from "@/components/auth/SuperAdminRoute";
 import AuthPage from "./pages/AuthPage";
@@ -17,6 +18,7 @@ import EventDetailsPage from "./pages/EventDetailsPage";
 import RentalsPage from "./pages/RentalsPage";
 import RentalDetailsPage from "./pages/RentalDetailsPage";
 import ContractsPage from "./pages/ContractsPage";
+import SettingsPage from "./pages/SettingsPage";
 import AdminDashboardPage from "./pages/admin/DashboardPage";
 import AdminEntitiesPage from "./pages/admin/EntitiesPage";
 import AdminEntityUsersPage from "./pages/admin/EntityUsersPage";
@@ -31,6 +33,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AuthProvider>
+          <BrandingProvider>
           <Routes>
             <Route path="/" element={<Navigate to="/auth" replace />} />
             <Route path="/auth" element={<AuthPage />} />
@@ -45,6 +48,7 @@ const App = () => (
             <Route path="/rentals" element={<ProtectedRoute><RentalsPage /></ProtectedRoute>} />
             <Route path="/rentals/:id" element={<ProtectedRoute><RentalDetailsPage /></ProtectedRoute>} />
             <Route path="/contracts" element={<ProtectedRoute><ContractsPage /></ProtectedRoute>} />
+            <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
             {/* Admin Routes */}
             <Route path="/admin/dashboard" element={<SuperAdminRoute><AdminDashboardPage /></SuperAdminRoute>} />
             <Route path="/admin/entities" element={<SuperAdminRoute><AdminEntitiesPage /></SuperAdminRoute>} />
@@ -54,6 +58,7 @@ const App = () => (
             <Route path="/super-admin/*" element={<Navigate to="/admin/dashboard" replace />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          </BrandingProvider>
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
