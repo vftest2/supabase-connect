@@ -187,10 +187,9 @@ export default function AdminEntityUsersPage() {
       if (!authData.user) throw new Error('Erro ao criar usuário');
 
       // The trigger creates profile + default 'user' role.
-      // We need to update the role to the selected one if not 'user'.
-      if (data.role !== 'user') {
-        // Delete the default role
-        await supabase
+      // We need to update the role to the selected one.
+      // Delete the default role and insert the correct one
+      await supabase
           .from('user_roles')
           .delete()
           .eq('user_id', authData.user.id)
