@@ -14,6 +14,9 @@ import ClientsPage from "./pages/ClientsPage";
 import EventsPage from "./pages/EventsPage";
 import AgendaPage from "./pages/AgendaPage";
 import EventDetailsPage from "./pages/EventDetailsPage";
+import RentalsPage from "./pages/RentalsPage";
+import RentalDetailsPage from "./pages/RentalDetailsPage";
+import ContractsPage from "./pages/ContractsPage";
 import AdminDashboardPage from "./pages/admin/DashboardPage";
 import AdminEntitiesPage from "./pages/admin/EntitiesPage";
 import AdminEntityUsersPage from "./pages/admin/EntityUsersPage";
@@ -32,75 +35,21 @@ const App = () => (
             <Route path="/" element={<Navigate to="/auth" replace />} />
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/admin" element={<AdminLoginPage />} />
-            {/* Legacy route redirect */}
             <Route path="/admin-login" element={<Navigate to="/admin" replace />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <DashboardPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/clients"
-              element={
-                <ProtectedRoute>
-                  <ClientsPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/agenda"
-              element={
-                <ProtectedRoute>
-                  <AgendaPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/events"
-              element={
-                <ProtectedRoute>
-                  <EventsPage />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/events/:id"
-              element={
-                <ProtectedRoute>
-                  <EventDetailsPage />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+            <Route path="/clients" element={<ProtectedRoute><ClientsPage /></ProtectedRoute>} />
+            <Route path="/agenda" element={<ProtectedRoute><AgendaPage /></ProtectedRoute>} />
+            <Route path="/events" element={<ProtectedRoute><EventsPage /></ProtectedRoute>} />
+            <Route path="/events/:id" element={<ProtectedRoute><EventDetailsPage /></ProtectedRoute>} />
+            <Route path="/rentals" element={<ProtectedRoute><RentalsPage /></ProtectedRoute>} />
+            <Route path="/rentals/:id" element={<ProtectedRoute><RentalDetailsPage /></ProtectedRoute>} />
+            <Route path="/contracts" element={<ProtectedRoute><ContractsPage /></ProtectedRoute>} />
             {/* Admin Routes */}
-            <Route
-              path="/admin/dashboard"
-              element={
-                <SuperAdminRoute>
-                  <AdminDashboardPage />
-                </SuperAdminRoute>
-              }
-            />
-            <Route
-              path="/admin/entities"
-              element={
-                <SuperAdminRoute>
-                  <AdminEntitiesPage />
-                </SuperAdminRoute>
-              }
-            />
-            <Route
-              path="/admin/entities/:entityId/users"
-              element={
-                <SuperAdminRoute>
-                  <AdminEntityUsersPage />
-                </SuperAdminRoute>
-              }
-            />
-            {/* Legacy route redirects */}
+            <Route path="/admin/dashboard" element={<SuperAdminRoute><AdminDashboardPage /></SuperAdminRoute>} />
+            <Route path="/admin/entities" element={<SuperAdminRoute><AdminEntitiesPage /></SuperAdminRoute>} />
+            <Route path="/admin/entities/:entityId/users" element={<SuperAdminRoute><AdminEntityUsersPage /></SuperAdminRoute>} />
+            {/* Legacy */}
             <Route path="/super-admin" element={<Navigate to="/admin/dashboard" replace />} />
             <Route path="/super-admin/*" element={<Navigate to="/admin/dashboard" replace />} />
             <Route path="*" element={<NotFound />} />
