@@ -24,6 +24,7 @@ import {
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+  { name: 'Clientes', href: '/clients', icon: Users },
   { name: 'Eventos', href: '/events', icon: Calendar },
   { name: 'Decorações', href: '/decorations', icon: Package },
   { name: 'Equipe', href: '/team', icon: Users, requireAdmin: true },
