@@ -12,6 +12,7 @@ import RegisterPage from "./pages/RegisterPage";
 import DashboardPage from "./pages/DashboardPage";
 import ClientsPage from "./pages/ClientsPage";
 import EventsPage from "./pages/EventsPage";
+import AgendaPage from "./pages/AgendaPage";
 import EventDetailsPage from "./pages/EventDetailsPage";
 import AdminDashboardPage from "./pages/admin/DashboardPage";
 import AdminEntitiesPage from "./pages/admin/EntitiesPage";
@@ -47,6 +48,14 @@ const App = () => (
               element={
                 <ProtectedRoute>
                   <ClientsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/agenda"
+              element={
+                <ProtectedRoute>
+                  <AgendaPage />
                 </ProtectedRoute>
               }
             />
