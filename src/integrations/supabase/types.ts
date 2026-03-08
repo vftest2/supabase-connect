@@ -14,6 +14,63 @@ export type Database = {
   }
   public: {
     Tables: {
+      checklist_items: {
+        Row: {
+          checked_in: boolean
+          checked_out: boolean
+          created_at: string | null
+          entity_id: string
+          event_id: string
+          id: string
+          inventory_item_id: string | null
+          name: string
+          notes: string | null
+          quantity: number
+          return_condition: string | null
+        }
+        Insert: {
+          checked_in?: boolean
+          checked_out?: boolean
+          created_at?: string | null
+          entity_id: string
+          event_id: string
+          id?: string
+          inventory_item_id?: string | null
+          name: string
+          notes?: string | null
+          quantity?: number
+          return_condition?: string | null
+        }
+        Update: {
+          checked_in?: boolean
+          checked_out?: boolean
+          created_at?: string | null
+          entity_id?: string
+          event_id?: string
+          id?: string
+          inventory_item_id?: string | null
+          name?: string
+          notes?: string | null
+          quantity?: number
+          return_condition?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "checklist_items_entity_id_fkey"
+            columns: ["entity_id"]
+            isOneToOne: false
+            referencedRelation: "entities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "checklist_items_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       clients: {
         Row: {
           address: string | null

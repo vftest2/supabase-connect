@@ -19,6 +19,8 @@ import RentalsPage from "./pages/RentalsPage";
 import RentalDetailsPage from "./pages/RentalDetailsPage";
 import ContractsPage from "./pages/ContractsPage";
 import SettingsPage from "./pages/SettingsPage";
+import LogisticsPage from "./pages/LogisticsPage";
+import DamagesPage from "./pages/DamagesPage";
 import AdminDashboardPage from "./pages/admin/DashboardPage";
 import AdminEntitiesPage from "./pages/admin/EntitiesPage";
 import AdminEntityUsersPage from "./pages/admin/EntityUsersPage";
@@ -49,6 +51,8 @@ const App = () => (
             <Route path="/rentals/:id" element={<ProtectedRoute><RentalDetailsPage /></ProtectedRoute>} />
             <Route path="/contracts" element={<ProtectedRoute><ContractsPage /></ProtectedRoute>} />
             <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
+            <Route path="/logistics" element={<ProtectedRoute><LogisticsPage /></ProtectedRoute>} />
+            <Route path="/damages" element={<ProtectedRoute><DamagesPage /></ProtectedRoute>} />
             {/* Admin Routes */}
             <Route path="/admin/dashboard" element={<SuperAdminRoute><AdminDashboardPage /></SuperAdminRoute>} />
             <Route path="/admin/entities" element={<SuperAdminRoute><AdminEntitiesPage /></SuperAdminRoute>} />
